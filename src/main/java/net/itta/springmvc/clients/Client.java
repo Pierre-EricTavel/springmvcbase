@@ -5,6 +5,9 @@
  */
 package net.itta.springmvc.clients;
 
+import javax.validation.constraints.*;
+
+
 /**
  *
  * @author Administrator
@@ -13,7 +16,8 @@ public class Client {
     
 
     
-    
+//     @NotNull(message="name cant be null")
+//    @Size(min=1,message="name cant be null")
     private String nom;
     private String prenom;
     private int age;

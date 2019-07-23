@@ -21,4 +21,11 @@
     </bean>
     
     <bean id="clientsRepository" class="net.itta.springmvc.clients.ClientsMemoryRepository" />
+    <bean id="messageSource"  class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
+        <property name="basenames">
+            <list>
+                <value>/WEB-INF/validation</value>
+            </list>
+        </property>
+    </bean>
 </beans>
