@@ -13,6 +13,8 @@
         <title>JSP Page</title>
     </head>
     <body>
+         <h1>Nouveau client</h1>
+         <%@include file="partialAuth.jspf" %>
          <form:form action="insertclient.html" method="post">
              <form:input type="hidden" path="id"/>
              <form:label path="nom">Saisir nom</form:label> <form:input type="text" path="nom"/><br>

@@ -1,25 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.itta.springmvc.clients;
 
 import javax.validation.constraints.*;
 
 
-/**
- *
- * @author Administrator
- */
 public class Client {
-    
 
-    
-//     @NotNull(message="name cant be null")
-//    @Size(min=1,message="name cant be null")
     private String nom;
     private String prenom;
+    
+    @Max(value=120,message = "pas plus de 120 ans")
+    @Min(value=0,message = "{TooYoung.client.age}")
     private int age;
     private int id;
 

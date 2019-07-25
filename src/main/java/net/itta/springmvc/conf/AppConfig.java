@@ -5,25 +5,20 @@
  */
 package net.itta.springmvc.conf;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-/*
+
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {
-    "net.itta.springmvc"
-})
+@Import(value={AppSecurityConfig.class, AppSessionConfig.class})
+@ComponentScan(basePackages = {"net.itta.springmvc"})
 public class AppConfig {
 
-    @Bean
-    public InternalResourceViewResolver resolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setViewClass(JstlView.class);
-        resolver.setPrefix("/WEB-INF/jsp/");
-        resolver.setSuffix(".jsp");
-        return resolver;
-    }
-}*/
+}

@@ -14,6 +14,8 @@
         <title>Edit client</title>
     </head>
     <body>
+         <h1>Supprime client</h1>
+         <%@include file="partialAuth.jspf" %>
        <c:out value="${command.nom}" /> <c:out value="${command.prenom}" /> va être supprimé!
          <form:form action="deleteclient.html" method="post" accept-charset="UTF-8">
             <form:input type="hidden" path="id" />

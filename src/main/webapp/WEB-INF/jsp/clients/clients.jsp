@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib    uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,7 +10,9 @@
     </head>
     <body>
         <h1>Liste Clients</h1>
+        <%@include file="partialAuth.jspf" %>
         <a href="createclient.html">Créér client</a><br>
+      
         <table>
             <thead><th>ID</th><th>nom</th><th>prenom</th><th>age</th><th colspan="2"></th></thead>
                 <c:forEach var="client" items="${listeclients}" >
