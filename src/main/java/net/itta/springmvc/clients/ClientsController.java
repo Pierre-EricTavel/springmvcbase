@@ -4,9 +4,12 @@ package net.itta.springmvc.clients;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.ui.Model;
@@ -14,24 +17,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 
+
 @Controller
-@SessionAttributes("Listeclients")
+
 public class ClientsController {
 
-    @Autowired
-    ClientsMemoryRepository clientsMemoryRepository;
+    @Resource(name = "myClientsRepository") //ou @Autowired si clientsMemoryRepository @Scoped("session")
+    ClientsRepository clientsRepository;
     
     @Autowired
     Validator userFormValidator;
 
-    
     Logger log = LoggerFactory.getLogger(this.getClass());
     
     @InitBinder
@@ -40,21 +43,19 @@ public class ClientsController {
     }
     
     List<Client> getListeClient(){
-        return clientsMemoryRepository.getListeclients();
+        return clientsRepository.getListeclients();
     }
 
      @RequestMapping(value = "/clients" ,method = RequestMethod.GET )
     public ModelAndView clients(HttpServletRequest request){
-        Object o = request.getSession().getAttribute("Listeclients");
-        if(o!=null)
-            clientsMemoryRepository.getListeclients().addAll((List<Client>)request.getSession().getAttribute("Listeclients"));
+        
         return new ModelAndView("clients","listeclients",getListeClient());
     }
     
     
      @RequestMapping(value = "/modifyclient" ,method = RequestMethod.GET)
     public ModelAndView modifyclient(@RequestParam(name = "id") int id){
-        Optional<Client> client=clientsMemoryRepository.getClientById(id);
+        Optional<Client> client=clientsRepository.getClientById(id);
        
         if(client.isPresent()) {
             return new ModelAndView("modifyclient","client",client.get());
@@ -70,7 +71,7 @@ public class ClientsController {
             client.setPrenom(new String(client.getPrenom().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));;
             return  "modifyclient";
          }
-         clientsMemoryRepository.updateClient(client);
+         clientsRepository.updateClient(client);
          return  "redirect:clients.html";
 
     }
@@ -78,7 +79,7 @@ public class ClientsController {
    @PreAuthorize("hasRole('ADMINISTRATORS')")
       @RequestMapping(value = "/supprimeclient" ,method = RequestMethod.GET)
     public ModelAndView supprimeclient(@RequestParam(name = "id") int id){
-        Optional<Client> clientdb=clientsMemoryRepository.getClientById(id);
+        Optional<Client> clientdb=clientsRepository.getClientById(id);
         if(clientdb.isPresent()){
             return new ModelAndView("supprimeclient","command",clientdb.get());
         }
@@ -87,7 +88,7 @@ public class ClientsController {
     
       @RequestMapping(value = "/deleteclient" ,method = RequestMethod.POST)
     public RedirectView deleteclient(@RequestParam(name = "id") int id, Model model){
-        clientsMemoryRepository.removeClientById(id);
+        clientsRepository.removeClientById(id);
         return  new RedirectView("clients.html");
     }
       @RequestMapping(value = "/createclient" ,method = RequestMethod.GET)
@@ -98,7 +99,7 @@ public class ClientsController {
     
       @RequestMapping(value = "/insertclient" ,method = RequestMethod.POST)
     public RedirectView insertclient(@ModelAttribute("ittaSpringMvc") Client client){
-        clientsMemoryRepository.insertClient(client);
+        clientsRepository.insertClient(client);
         return  new RedirectView("clients.html");
     }
 }

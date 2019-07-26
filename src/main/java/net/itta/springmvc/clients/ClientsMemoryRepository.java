@@ -9,12 +9,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 
-@Service
+@Service()
+ //@Scope(value=WebApplicationContext.SCOPE_SESSION,proxyMode =  ScopedProxyMode.TARGET_CLASS ) fait dans le bean de AppConfig
 public class ClientsMemoryRepository implements ClientsRepository {
     
     private List<Client> listeclients;
+    
 
     @Override
     public List<Client> getListeclients() {
