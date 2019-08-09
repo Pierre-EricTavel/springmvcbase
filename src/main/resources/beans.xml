@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--
+    <bean id="lion1" class="net.itta.ittaspring.Lion"></bean>
+   -->
+    <!--<bean id="cage" class="net.itta.ittaspring.Cage" scope="prototype">
+        <property name="animal">
+            <bean id="lion" class="net.itta.ittaspring.Lion">
+                <property name="nom" value="Simba"></property>
+            </bean>
+        </property>
+    </bean> -->
+    <!--
+     <bean id="simba" class="net.itta.ittaspring.Lion" scope="prototype">
+          <property name="nom" value="Simba"></property>
+      </bean>
+      <bean id="cageindividuelle" class="net.itta.ittaspring.CageIndividuelle" scope="prototype">
+        <property name="animal" ref="simba"></property>
+    </bean> 
+     <bean id="king" class="net.itta.ittaspring.Lion" scope="prototype">
+          <property name="nom" ><null/></property>
+      </bean>
+     <bean id="cage" class="net.itta.ittaspring.Cage" init-method="nettoyer" destroy-method="nettoyer"  scope="prototype">
+        <property name="animaux">
+            <list>
+                <ref bean="simba"></ref>
+                <ref bean="king"></ref>
+            </list>
+        </property>
+    </bean>
+    -->
+    <!--
+    <bean id="postproc" class="net.itta.initializer.PostProcessor"></bean>
+    -->
+      <bean id="simba" class="net.itta.ittaspring.Lion" p:nom="Simba" />
+    <!--<bean id="cri" class="net.itta.ittaspring.Feulement">
+         <constructor-arg name="lion" ref="simba" />
+    </bean> -->
+    <bean id="cri1" class="net.itta.ittaspring.Feulement" c:_-ref="simba" scope="prototype" />
+    <bean id="cri2" class="net.itta.ittaspring.Feulement" c:lion-ref="simba" c:cri="Roaaaarrr!" scope="prototype"/>
+</beans>
